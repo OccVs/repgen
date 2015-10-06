@@ -60,10 +60,13 @@ namespace PDFAttachments
             }
         }
 
-        private static void RemoveTableBorders(PdfPTable table) => table.Rows.ForEach(r =>
+        private static void FormatTableCells(PdfPTable table, int? padding) => table.Rows.ForEach(r =>
         {
             foreach (var cell in r.GetCells().Where(c => c != null))
+            {
                 cell.Border = Rectangle.NO_BORDER;
+                if (padding.HasValue) cell.PaddingBottom = padding.Value;
+            }
         });
 
         private static PdfPCell MakeCell(string text, Font font, int horizontalAlignment = Element.ALIGN_LEFT,
@@ -144,7 +147,7 @@ namespace PDFAttachments
             table.AddCell(new PdfPCell());
             table.AddCell(MakeCell(settings.Date.ToLongDateString(), font));
 
-            RemoveTableBorders(table);
+            FormatTableCells(table, null);
             doc.Add(table);
         }
 
@@ -182,7 +185,7 @@ namespace PDFAttachments
                 footerImageCell.FixedHeight = cellHeight;
                 footerImageCell.HorizontalAlignment = Element.ALIGN_CENTER;
                 footer.AddCell(footerImageCell);
-                RemoveTableBorders(footer);
+                FormatTableCells(footer, null);
                 footer.WriteSelectedRows(0, -1, page.BorderWidthLeft, footer.TotalHeight, writer.DirectContent);
             }
         }
@@ -250,7 +253,7 @@ namespace PDFAttachments
                     {
                         if (table.Rows.Any() && table.Complete)
                         {
-                            RemoveTableBorders(table);
+                            FormatTableCells(table, 20);
                             doc.Add(table);
                             doc.NewPage();
                             table = MakeAttachmentTable();
@@ -293,7 +296,7 @@ namespace PDFAttachments
 
                     table.AddCell(description);
                 }
-                RemoveTableBorders(table);
+                FormatTableCells(table, 20);
                 doc.Add(table);
 
                 doc.Close();
