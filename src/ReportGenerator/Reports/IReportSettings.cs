@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace ReportGenerator.Models
+namespace ReportGenerator.Reports
 {
     internal interface IReportSettings
     {

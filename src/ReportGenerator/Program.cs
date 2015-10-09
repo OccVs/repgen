@@ -4,7 +4,7 @@ using System.Linq;
 using iTextSharp.text;
 using iTextSharp.text.pdf;
 using Newtonsoft.Json;
-using ReportGenerator.Models;
+using ReportGenerator.Reports;
 
 namespace ReportGenerator
 {

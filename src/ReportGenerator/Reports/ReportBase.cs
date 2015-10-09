@@ -1,8 +1,9 @@
 ﻿using System.Linq;
 using iTextSharp.text;
 using iTextSharp.text.pdf;
+using ReportGenerator.Models;
 
-namespace ReportGenerator.Models
+namespace ReportGenerator.Reports
 {
     internal abstract class ReportBase<T> where T : ReportSettingsBase
     {

@@ -1,6 +1,7 @@
 ﻿using System.Collections.Generic;
+using ReportGenerator.Models;
 
-namespace ReportGenerator.Models
+namespace ReportGenerator.Reports
 {
     internal class WorkflowSummaryReportSettings : ReportSettingsBase
     {

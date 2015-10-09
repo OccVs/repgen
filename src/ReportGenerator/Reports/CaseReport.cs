@@ -4,8 +4,9 @@ using System.Linq;
 using iTextSharp.text;
 using iTextSharp.text.pdf;
 using iTextSharp.text.pdf.draw;
+using ReportGenerator.Models;
 
-namespace ReportGenerator.Models
+namespace ReportGenerator.Reports
 {
     internal class CaseReport : ReportBase<CaseReportSettings>
     {

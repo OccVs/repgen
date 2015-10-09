@@ -1,7 +1,7 @@
 ﻿using System;
 using iTextSharp.text;
 using iTextSharp.text.pdf;
-using ReportGenerator.Models;
+using ReportGenerator.Reports;
 
 namespace ReportGenerator
 {
