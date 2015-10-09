@@ -2,9 +2,9 @@
 using System.Collections.Generic;
 using System.Text;
 
-namespace PDFAttachments.Models
+namespace ReportGenerator.Models
 {
-    public class PdfSettings
+    internal abstract class ReportSettingsBase : IReportSettings
     {
         public float? PageLeftMargin { get; set; }
         public float? PageRightMargin { get; set; }

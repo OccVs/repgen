@@ -7,8 +7,8 @@
     <ProjectGuid>{9311446E-4D73-4CC1-B997-6A827AA60BE6}</ProjectGuid>
     <OutputType>Exe</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>PDFAttachments</RootNamespace>
-    <AssemblyName>PDFAttachments</AssemblyName>
+    <RootNamespace>ReportGenerator</RootNamespace>
+    <AssemblyName>ReportGenerator</AssemblyName>
     <TargetFrameworkVersion>v4.5.2</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <AutoGenerateBindingRedirects>true</AutoGenerateBindingRedirects>
@@ -53,9 +53,20 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Models\AttachmentEntry.cs" />
-    <Compile Include="Models\PdfSettings.cs" />
+    <Compile Include="Models\CaseReport.cs" />
+    <Compile Include="Models\CaseReportSettings.cs" />
+    <Compile Include="Models\FileEntryBase.cs" />
+    <Compile Include="Models\InputFileEntry.cs" />
+    <Compile Include="Models\IReportSettings.cs" />
+    <Compile Include="Models\OperationDetailEntry.cs" />
+    <Compile Include="Models\OperationEntry.cs" />
+    <Compile Include="Models\OutputFileEntry.cs" />
+    <Compile Include="Models\ReportSettingsBase.cs" />
+    <Compile Include="Models\ReportBase.cs" />
+    <Compile Include="Models\WorkflowSummaryReportSettings.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="ReportFactory.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />
@@ -64,6 +75,7 @@
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
   </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.

@@ -19,13 +19,13 @@
   "SignatureFilename": "E:\\Pictures\\384px-JohnHancocksSignature.svg.png",
   "Attachments": [
     {
-      "Thumbnail": "E:\\Pictures\\OST_thumb.png",
+      "ThumbnailPath": "E:\\Pictures\\OST_thumb.png",
       "DescriptiveText": "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Etiam ullamcorper congue tempus. Aenean ut eleifend sem, in placerat enim. Praesent tincidunt nunc id iaculis varius. Morbi sit amet sem commodo, placerat nisi a, laoreet lorem. Praesent justo felis, porta ut sodales at, sollicitudin at tellus. Curabitur auctor eleifend est id consectetur. Maecenas iaculis tristique odio ut euismod. Integer massa ex, lobortis et convallis vitae, aliquam at sapien. Nulla mattis, urna sed mattis pharetra, massa nunc dapibus elit, vel accumsan leo nulla nec nulla. Mauris ac varius mi. Aliquam vitae ullamcorper orci. Sed nec semper erat. Aenean lorem odio, lobortis sit amet dictum ac, molestie eget mi. Fusce convallis justo mattis nulla varius eleifend. Fusce nec nibh non nisi varius vehicula a vel erat. Maecenas in iaculis metus, at vehicula justo.",
-      "Attachment": "E:\\Pictures\\Generate on Screen Text 4.png"
+      "AttachmentPath": "E:\\Pictures\\Generate on Screen Text 4.png"
     },
     {
-      "Thumbnail": "E:\\Pictures\\OST_thumb.png",
-      "Attachment": "E:\\Pictures\\Generate on Screen Text 4.png"
+      "ThumbnailPath": "E:\\Pictures\\OST_thumb.png",
+      "AttachmentPath": "E:\\Pictures\\Generate on Screen Text 4.png"
     },
     {
       "SectionHeader": "Some New Section",
@@ -34,8 +34,8 @@
     {
       "SectionHeader": "Some New Section with Pictures!",
       "DescriptiveText": "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Etiam ullamcorper congue tempus. Aenean ut eleifend sem, in placerat enim. Praesent tincidunt nunc id iaculis varius. Morbi sit amet sem commodo, placerat nisi a, laoreet lorem. Praesent justo felis, porta ut sodales at, sollicitudin at tellus. Curabitur auctor eleifend est id consectetur. Maecenas iaculis tristique odio ut euismod. Integer massa ex, lobortis et convallis vitae, aliquam at sapien. Nulla mattis, urna sed mattis pharetra, massa nunc dapibus elit, vel accumsan leo nulla nec nulla. Mauris ac varius mi. Aliquam vitae ullamcorper orci. Sed nec semper erat. Aenean lorem odio, lobortis sit amet dictum ac, molestie eget mi. Fusce convallis justo mattis nulla varius eleifend. Fusce nec nibh non nisi varius vehicula a vel erat. Maecenas in iaculis metus, at vehicula justo.",
-      "Thumbnail": "E:\\Pictures\\OST_thumb.png",
-      "Attachment": "E:\\Pictures\\Generate on Screen Text 4.png"
+      "ThumbnailPath": "E:\\Pictures\\OST_thumb.png",
+      "AttachmentPath": "E:\\Pictures\\Generate on Screen Text 4.png"
     }
   ]
 }
