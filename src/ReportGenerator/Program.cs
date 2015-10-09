@@ -1,6 +1,5 @@
 ﻿using System;
 using System.IO;
-using System.Linq;
 using iTextSharp.text;
 using iTextSharp.text.pdf;
 using Newtonsoft.Json;
@@ -14,49 +13,53 @@ namespace ReportGenerator
         {
             if (args.Length < 1)
             {
-                Console.Error.WriteLine("No settings JSON file specified");
+                Console.Error.WriteLine("No report settings file specified");
                 Environment.Exit(1);
             }
             if (!File.Exists(args[0]))
             {
-                Console.Error.WriteLine("File not found");
-                Environment.Exit(1);
-            }
-
-            // TODO: Implement handling of different configuration file and report types
-            CaseReportSettings settings = null;
-
-            try
-            {
-                settings = JsonConvert.DeserializeObject<CaseReportSettings>(File.ReadAllText(args[0]));
-            }
-            catch (Exception)
-            {
-                Console.Error.WriteLine("Error parsing settings JSON file");
-                Environment.Exit(1);
-            }
-
-            if (string.IsNullOrEmpty(settings.Filename))
-            {
-                Console.Error.WriteLine("No output filename found in settings JSON file");
-                Environment.Exit(1);
-            }
-
-            if (settings.Attachments == null || !settings.Attachments.Any())
-            {
-                Console.Error.WriteLine("No attachments found in settings JSON file");
+                Console.Error.WriteLine("Report settings file not found");
                 Environment.Exit(1);
             }
 
             try
             {
                 //WriteReport(settings);
-                WriteReport<CaseReportSettings, CaseReport>(settings);
+                // TODO: Implement handling of different configuration file and report types
+                WriteCaseReport(File.ReadAllText(args[0]));
             }
             catch (Exception ex)
             {
-                Console.Error.WriteLine("Error generating PDF file");
+                Console.Error.WriteLine("Error generating report");
                 Console.Error.WriteLine(ex);
+                Environment.Exit(1);
+            }
+        }
+
+        private static void WriteCaseReport(string settingsJson)
+        {
+            CaseReportSettings settings;
+            DeserializeSetting(out settings, settingsJson);
+            WriteReport<CaseReportSettings, CaseReport>(settings);
+        }
+
+        private static void CheckSettings(IReportSettings settings)
+        {
+            if (settings.IsValid) return;
+            Console.Error.WriteLine(settings.ValidationFailures);
+            Environment.Exit(1);
+        }
+
+        private static void DeserializeSetting<T>(out T settings, string settingsJson) where T: IReportSettings
+        {
+            settings = default(T);
+            try
+            {
+                settings = JsonConvert.DeserializeObject<T>(settingsJson);
+            }
+            catch (Exception)
+            {
+                Console.Error.WriteLine("Error parsing settings JSON file");
                 Environment.Exit(1);
             }
         }
@@ -64,6 +67,7 @@ namespace ReportGenerator
         private static void WriteReport<TSettings, TReport>(TSettings settings) where TSettings : ReportSettingsBase
             where TReport : ReportBase<TSettings>
         {
+            CheckSettings(settings);
             using (
                 var fs = settings.UserDefinedTitlePage
                     ? File.OpenWrite(settings.TitlePageFilename)

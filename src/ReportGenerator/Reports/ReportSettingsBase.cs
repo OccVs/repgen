@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Text;
 using ReportGenerator.Models;
 
@@ -7,6 +8,11 @@ namespace ReportGenerator.Reports
 {
     internal abstract class ReportSettingsBase : IReportSettings
     {
+        protected ReportSettingsBase()
+        {
+            ValidationFailureList = new List<string>();
+        }
+
         public float? PageLeftMargin { get; set; }
         public float? PageRightMargin { get; set; }
         public float? PageTopMargin { get; set; }
@@ -41,6 +47,10 @@ namespace ReportGenerator.Reports
         public string AdditionalInfo { get; set; }
         public DateTime Date { get; set; }
         public string SignatureFilename { get; set; }
-        public List<AttachmentEntry> Attachments { get; set; } 
+        public List<AttachmentEntry> Attachments { get; set; }
+
+        public virtual bool IsValid => !string.IsNullOrEmpty(Filename);
+        protected List<string> ValidationFailureList { get; }
+        public string ValidationFailures => string.Join(Environment.NewLine, ValidationFailureList);
     }
 }
