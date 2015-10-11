@@ -1,7 +1,6 @@
 ﻿using System.Linq;
 using iTextSharp.text;
 using iTextSharp.text.pdf;
-using ReportGenerator.Models;
 
 namespace ReportGenerator.Reports
 {
@@ -10,6 +9,7 @@ namespace ReportGenerator.Reports
         protected T Settings { get; }
         protected Document Document { get; }
         protected PdfWriter Writer { get; }
+        protected IPdfPageEvent HeaderFooterHelper { get; set; }
 
         protected ReportBase(T settings, Document document, PdfWriter writer)
         {
@@ -22,53 +22,11 @@ namespace ReportGenerator.Reports
 
         public virtual void Generate()
         {
-            Writer.PageEvent = new Footer(Settings.CaseNumber, Settings.NameTitlePin, Settings.SignatureFilename);
+            Document.AddTitle(Settings.ReportTitle);
+            if (HeaderFooterHelper != null) Writer.PageEvent = HeaderFooterHelper;
             if (!Settings.UserDefinedTitlePage)
                 CreateTitlePage();
             Document.NewPage();
-        }
-
-        // We maybe should move footers into their own classes and inject them if they need to be customized/swapped
-        protected class Footer : PdfPageEventHelper
-        {
-            private string FooterText { get; }
-
-            private string FirstPageFooterText { get; }
-
-            private string FooterImagePath { get; }
-
-            private bool HasFooterImage => !string.IsNullOrEmpty(FooterImagePath);
-
-            public Footer(string firstPageFooter, string footer, string footerImagePath = null)
-            {
-                FirstPageFooterText = firstPageFooter;
-                FooterText = footer;
-                FooterImagePath = footerImagePath;
-            }
-
-            public override void OnEndPage(PdfWriter writer, Document document)
-            {
-                var font = FontFactory.GetFont("Calibri", 8);
-                var page = document.PageSize;
-                var footer = new PdfPTable(3) {TotalWidth = page.Width - (page.BorderWidthLeft + page.BorderWidthRight)};
-                var cellHeight = document.BottomMargin;
-                footer.SetWidths(new[] {1f, 1f, 1f});
-                var footerTextCell = MakeCell(writer.PageNumber == 1 ? FirstPageFooterText : FooterText, font,
-                    Element.ALIGN_CENTER);
-                footerTextCell.FixedHeight = cellHeight;
-                footer.AddCell(footerTextCell);
-                var pageCell = MakeCell($"Page {writer.PageNumber}", font, Element.ALIGN_CENTER);
-                pageCell.FixedHeight = cellHeight;
-                footer.AddCell(pageCell);
-                var footerImageCell = HasFooterImage
-                    ? new PdfPCell(Image.GetInstance(FooterImagePath, true))
-                    : new PdfPCell();
-                footerImageCell.FixedHeight = cellHeight;
-                footerImageCell.HorizontalAlignment = Element.ALIGN_CENTER;
-                footer.AddCell(footerImageCell);
-                FormatTableCells(footer, null);
-                footer.WriteSelectedRows(0, -1, page.BorderWidthLeft, footer.TotalHeight, writer.DirectContent);
-            }
         }
 
         protected sealed class AttachmentTable : PdfPTable

@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
 using System.Text;
 using ReportGenerator.Models;
 
@@ -46,10 +45,11 @@ namespace ReportGenerator.Reports
         public List<string> AdditionalNames { get; set; }
         public string AdditionalInfo { get; set; }
         public DateTime Date { get; set; }
-        public string SignatureFilename { get; set; }
+        public string HeaderImagePath { get; set; }
+        public string FooterImagePath { get; set; }
         public List<AttachmentEntry> Attachments { get; set; }
 
-        public virtual bool IsValid => !string.IsNullOrEmpty(Filename);
+        public virtual bool IsValid() { return !string.IsNullOrEmpty(Filename); } 
         protected List<string> ValidationFailureList { get; }
         public string ValidationFailures => string.Join(Environment.NewLine, ValidationFailureList);
     }

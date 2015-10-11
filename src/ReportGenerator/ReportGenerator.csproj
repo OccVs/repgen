@@ -33,6 +33,10 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="CommandLine, Version=2.0.0.0, Culture=neutral, PublicKeyToken=de6f01bd326f8c32, processorArchitecture=MSIL">
+      <HintPath>..\..\packages\CommandLineParser20.2.0.0.0\lib\net40\CommandLine.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
     <Reference Include="itextsharp, Version=5.5.7.0, Culture=neutral, PublicKeyToken=8354ae6d2174ddca, processorArchitecture=MSIL">
       <HintPath>..\..\packages\iTextSharp.5.5.7\lib\itextsharp.dll</HintPath>
       <Private>True</Private>
@@ -52,6 +56,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Extensions\HumanReadableFileSize.cs" />
     <Compile Include="Models\AttachmentEntry.cs" />
     <Compile Include="Reports\CaseReport.cs" />
     <Compile Include="Reports\CaseReportSettings.cs" />
@@ -63,6 +68,7 @@
     <Compile Include="Models\OutputFileEntry.cs" />
     <Compile Include="Reports\ReportSettingsBase.cs" />
     <Compile Include="Reports\ReportBase.cs" />
+    <Compile Include="Reports\WorkflowSummaryReport.cs" />
     <Compile Include="Reports\WorkflowSummaryReportSettings.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -70,8 +76,11 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />
+    <Content Include="WorkflowSummaryReportSample.json">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
     <None Include="packages.config" />
-    <Content Include="sample.json">
+    <Content Include="CaseReportSample.json">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
   </ItemGroup>

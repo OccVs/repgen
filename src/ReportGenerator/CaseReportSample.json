@@ -1,8 +1,8 @@
 ﻿{
   "PageLeftMargin": "10",
   "PageRightMargin": "10",
-  "ReportTitle": "Test Report",
-  "Filename": "Test.pdf",
+  "ReportTitle": "Case Report",
+  "Filename": "Case Report.pdf",
   "CaseNumber": "100x-B7-2015-10-05",
   "Agency": "Bureau of Awesomesauce",
   "AgencyInfo": "Alpha Division",
@@ -16,7 +16,7 @@
   ],
   "AdditionalInfo": "Eyes Only",
   "Date": "2015-10-05T16:25:43.511Z",
-  "SignatureFilename": "E:\\Pictures\\384px-JohnHancocksSignature.svg.png",
+  "FooterImagePath": "E:\\Pictures\\384px-JohnHancocksSignature.svg.png",
   "Attachments": [
     {
       "ThumbnailPath": "E:\\Pictures\\OST_thumb.png",

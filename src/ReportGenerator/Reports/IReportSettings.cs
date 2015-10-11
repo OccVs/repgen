@@ -7,7 +7,7 @@ namespace ReportGenerator.Reports
         DateTime Date { get; set; }
         string Filename { get; set; }
         string ReportTitle { get; set; }
-        bool IsValid { get; }
+        bool IsValid();
         string ValidationFailures { get; }
     }
 }

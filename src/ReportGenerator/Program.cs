@@ -1,5 +1,8 @@
 ﻿using System;
+using System.Diagnostics.CodeAnalysis;
 using System.IO;
+using System.Linq;
+using CommandLine;
 using iTextSharp.text;
 using iTextSharp.text.pdf;
 using Newtonsoft.Json;
@@ -9,24 +12,50 @@ namespace ReportGenerator
 {
     internal static class Program
     {
+        [SuppressMessage("ReSharper", "UnusedAutoPropertyAccessor.Local")]
+        class Options
+        {
+            [Option('r', "report", Required = true, HelpText = "Name of the report to run")]
+            public string Report { get; set; }
+            [Option('c', "config", Required = true, HelpText = "Path to the report configuration file (JSON)")]
+            public string ConfigPath { get; set; }
+        }
+
         private static void Main(string[] args)
         {
-            if (args.Length < 1)
+            var result = Parser.Default.ParseArguments<Options>(args);
+            if (result.Errors.Any())
             {
-                Console.Error.WriteLine("No report settings file specified");
+                foreach (var error in result.Errors)
+                    Console.Error.WriteLine(error);
                 Environment.Exit(1);
             }
-            if (!File.Exists(args[0]))
+
+            var options = result.Value;
+            if (!File.Exists(options.ConfigPath))
             {
                 Console.Error.WriteLine("Report settings file not found");
                 Environment.Exit(1);
             }
 
+            Func<string, bool> isReport = name => string.Compare(options.Report, name, StringComparison.OrdinalIgnoreCase) == 0;
+
             try
             {
-                //WriteReport(settings);
-                // TODO: Implement handling of different configuration file and report types
-                WriteCaseReport(File.ReadAllText(args[0]));
+                if (isReport(nameof(CaseReport)))
+                {
+                    WriteCaseReport(File.ReadAllText(options.ConfigPath));
+                }
+                else if (isReport(nameof(WorkflowSummaryReport)))
+                {
+                    WriteWorkflowSummaryReport(File.ReadAllText(options.ConfigPath));
+                }
+                else
+                {
+                    Console.Error.WriteLine("Unknown report name");
+                    Environment.Exit(1);
+                }
+
             }
             catch (Exception ex)
             {
@@ -39,18 +68,25 @@ namespace ReportGenerator
         private static void WriteCaseReport(string settingsJson)
         {
             CaseReportSettings settings;
-            DeserializeSetting(out settings, settingsJson);
+            DeserializeSettings(out settings, settingsJson);
             WriteReport<CaseReportSettings, CaseReport>(settings);
+        }
+
+        private static void WriteWorkflowSummaryReport(string settingsJson)
+        {
+            WorkflowSummaryReportSettings settings;
+            DeserializeSettings(out settings, settingsJson);
+            WriteReport<WorkflowSummaryReportSettings, WorkflowSummaryReport>(settings);
         }
 
         private static void CheckSettings(IReportSettings settings)
         {
-            if (settings.IsValid) return;
+            if (settings.IsValid()) return;
             Console.Error.WriteLine(settings.ValidationFailures);
             Environment.Exit(1);
         }
 
-        private static void DeserializeSetting<T>(out T settings, string settingsJson) where T: IReportSettings
+        private static void DeserializeSettings<T>(out T settings, string settingsJson) where T: IReportSettings
         {
             settings = default(T);
             try

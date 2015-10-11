@@ -1,0 +1,139 @@
+﻿{
+  "PageLeftMargin": "10",
+  "PageRightMargin": "10",
+  "PageTopMargin":  "72",
+  "PageBottomMargin": "42",
+  "HeaderFontFace": "Calibri",
+  "HeaderFontSize": 11,
+  "FontFace": "Cambria",
+  "FontSize": 9,
+  "HeaderImagePath": "E:\\Code\\ForensicVideoSolutions\\Font and Text\\Icons\\input-white-transparent.png",
+  "ReportTitle": "Workflow Summary",
+  "Filename": "Workflow Summary.pdf",
+  "CaseNumber": "100x-B7-2015-10-05",
+  "Name": "Drew Peterson",
+  "Date": "2015-10-05T16:25:43.511Z",
+  "InputFiles": [
+    {
+      "Name": "Train wreck video",
+      "Hash": "e69c481d663dec4a498147664b7c4c2a",
+      "Path": "",
+      "VideoStreams": 3,
+      "AudioStreams": 2,
+      "Codec": "",
+      "Size": 324000000,
+      "PixelFormat": "",
+      "FrameRate": 30.0,
+      "SAR": ""
+    },
+    {
+      "Name": "Car crash video",
+      "Hash": "22a933146d8a3002515f70dcb3eb97f9",
+      "Path": "",
+      "VideoStreams": 1,
+      "AudioStreams": 1,
+      "Codec": "",
+      "Size": 62050000,
+      "PixelFormat": "",
+      "FrameRate": 15.0,
+      "SAR": ""
+    },
+    {
+      "Name": "ATM robbery video",
+      "Hash": "16971a92caf42bf4c8314e4f06a7f680",
+      "Path": "",
+      "VideoStreams": 4,
+      "AudioStreams": 0,
+      "Codec": "",
+      "Size": 512125532,
+      "PixelFormat": "",
+      "FrameRate": 15.0,
+      "SAR": ""
+    },
+    {
+      "Name": "Escalator fall video",
+      "Hash": "7addb5395fb64a54a17d69393a573f7b",
+      "Path": "",
+      "VideoStreams": 1,
+      "AudioStreams": 0,
+      "Codec": "",
+      "Size": 10430052,
+      "PixelFormat": "",
+      "FrameRate": 2.0,
+      "SAR": ""
+    }
+  ],
+  "Operations": [
+    {
+      "Name": "Transcode Operation",
+      "Details": [
+        {
+          "Description": "Transcode video",
+          "Settings": "Some settings"
+        },
+        {
+          "Description": "Resize",
+          "Settings": "640x480"
+        },
+        {
+          "Description": "Mark in",
+          "Settings": "00:00:30.000"
+        },
+        {
+          "Description": "Mark out",
+          "Settings": "00:05:30.000"
+        }
+      ]
+    }
+  ],
+  "OutputFiles": [
+    {
+      "Name": "Train wreck video clip",
+      "Hash": "ef0181de18ef3951806c0ad63b897ba4",
+      "Path": "",
+      "VideoStreams": 1,
+      "AudioStreams": 1,
+      "Codec": "",
+      "Size": 50000000,
+      "PixelFormat": "",
+      "FrameRate": 30.0,
+      "SAR": ""
+    },
+    {
+      "Name": "Car crash video clip",
+      "Hash": "d528a0908a3844f599afff06ff601f9a",
+      "Path": "",
+      "VideoStreams": 1,
+      "AudioStreams": 1,
+      "Codec": "",
+      "Size": 25000000,
+      "PixelFormat": "",
+      "FrameRate": 15.0,
+      "SAR": ""
+    },
+    {
+      "Name": "ATM robbery video clip",
+      "Hash": "4883b69e2588fe491da7ca9ef06f0faa",
+      "Path": "",
+      "VideoStreams": 4,
+      "AudioStreams": 0,
+      "Codec": "",
+      "Size": 60000000,
+      "PixelFormat": "",
+      "FrameRate": 15.0,
+      "SAR": ""
+    },
+    {
+      "Name": "Escalator fall video clip",
+      "Hash": "f239b7580c86322663fd1f69691d606e",
+      "Path": "",
+      "VideoStreams": 1,
+      "AudioStreams": 0,
+      "Codec": "",
+      "Size": 650000,
+      "PixelFormat": "",
+      "FrameRate": 2.0,
+      "SAR": ""
+    }
+  ]
+}
