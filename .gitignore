@@ -129,3 +129,4 @@ _Pvt_Extensions/
 ModelManifest.xml
 /src/INPUT.Tests/Mocks/EnumMixinsTests.cs
 /src/INPUT/Projects/ProjectDiagram.cd
+.vs/*

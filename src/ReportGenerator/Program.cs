@@ -23,46 +23,69 @@ namespace ReportGenerator
 
         private static void Main(string[] args)
         {
-            var result = Parser.Default.ParseArguments<Options>(args);
-            if (result.Errors.Any())
+            //The input and output files will need to be passed in.
+            var reader = new PdfReader(@"C:\Users\Kevin\Desktop\Test.pdf");
+            using (var output = File.Open(@"C:\Users\Kevin\Desktop\Test_Link.pdf", FileMode.Create))
+            using (var stamper = new PdfStamper(reader, output))
             {
-                foreach (var error in result.Errors)
-                    Console.Error.WriteLine(error);
-                Environment.Exit(1);
+                //These three parameters will need to be passed in for each of the images. For now just hard coding a single one as an example
+                string filePath = @"C:\Users\Kevin\Desktop\rougeOne.mp4";
+                int page = 1;
+                Rectangle location = new Rectangle(0, 0, 500, 500);
+
+
+
+                string attachmentName = Path.GetFileName(filePath);
+                var fileSpec = PdfFileSpecification.FileEmbedded(stamper.Writer, filePath,
+                    attachmentName, null);
+                fileSpec.AddDescription(attachmentName, false);
+                stamper.AddFileAttachment(null, fileSpec);
+                var annot = PdfAnnotation.CreateLink(stamper.Writer, location, PdfAnnotation.HIGHLIGHT_NONE,
+                    PdfAction.JavaScript(
+                        $"this.exportDataObject({{ cName: '{attachmentName}', nLaunch: 2 }});", stamper.Writer));
+                stamper.AddAnnotation(annot, page);
             }
 
-            var options = result.Value;
-            if (!File.Exists(options.ConfigPath))
-            {
-                Console.Error.WriteLine("Report settings file not found");
-                Environment.Exit(1);
-            }
-
-            Func<string, bool> isReport = name => string.Compare(options.Report, name, StringComparison.OrdinalIgnoreCase) == 0;
-
-            try
-            {
-                if (isReport(nameof(CaseReport)))
-                {
-                    WriteCaseReport(File.ReadAllText(options.ConfigPath));
-                }
-                else if (isReport(nameof(WorkflowSummaryReport)))
-                {
-                    WriteWorkflowSummaryReport(File.ReadAllText(options.ConfigPath));
-                }
-                else
-                {
-                    Console.Error.WriteLine("Unknown report name");
-                    Environment.Exit(1);
-                }
-
-            }
-            catch (Exception ex)
-            {
-                Console.Error.WriteLine("Error generating report");
-                Console.Error.WriteLine(ex);
-                Environment.Exit(1);
-            }
+            //var result = Parser.Default.ParseArguments<Options>(args);
+            //if (result.Errors.Any())
+            //{
+            //    foreach (var error in result.Errors)
+            //        Console.Error.WriteLine(error);
+            //    Environment.Exit(1);
+            //}
+            //
+            //var options = result.Value;
+            //if (!File.Exists(options.ConfigPath))
+            //{
+            //    Console.Error.WriteLine("Report settings file not found");
+            //    Environment.Exit(1);
+            //}
+            //
+            //Func<string, bool> isReport = name => string.Compare(options.Report, name, StringComparison.OrdinalIgnoreCase) == 0;
+            //
+            //try
+            //{
+            //    if (isReport(nameof(CaseReport)))
+            //    {
+            //        WriteCaseReport(File.ReadAllText(options.ConfigPath));
+            //    }
+            //    else if (isReport(nameof(WorkflowSummaryReport)))
+            //    {
+            //        WriteWorkflowSummaryReport(File.ReadAllText(options.ConfigPath));
+            //    }
+            //    else
+            //    {
+            //        Console.Error.WriteLine("Unknown report name");
+            //        Environment.Exit(1);
+            //    }
+            //
+            //}
+            //catch (Exception ex)
+            //{
+            //    Console.Error.WriteLine("Error generating report");
+            //    Console.Error.WriteLine(ex);
+            //    Environment.Exit(1);
+            //}
         }
 
         private static void WriteCaseReport(string settingsJson)
@@ -86,7 +109,7 @@ namespace ReportGenerator
             Environment.Exit(1);
         }
 
-        private static void DeserializeSettings<T>(out T settings, string settingsJson) where T: IReportSettings
+        private static void DeserializeSettings<T>(out T settings, string settingsJson) where T : IReportSettings
         {
             settings = default(T);
             try
@@ -104,6 +127,7 @@ namespace ReportGenerator
             where TReport : ReportBase<TSettings>
         {
             CheckSettings(settings);
+
             using (
                 var fs = settings.UserDefinedTitlePage
                     ? File.OpenWrite(settings.TitlePageFilename)
