@@ -24,7 +24,7 @@ namespace ReportGenerator
         private static void Main(string[] args)
         {
             //The input and output files will need to be passed in.
-            var reader = new PdfReader(@"C:\Users\Kevin\Desktop\Test.pdf");
+            using (var reader = new PdfReader(@"C:\Users\Kevin\Desktop\Test.pdf"))
             using (var output = File.Open(@"C:\Users\Kevin\Desktop\Test_Link.pdf", FileMode.Create))
             using (var stamper = new PdfStamper(reader, output))
             {
