@@ -7,7 +7,6 @@ using iTextSharp.text;
 using iTextSharp.text.pdf;
 using Newtonsoft.Json;
 using ReportGenerator.Reports;
-using System.Collections.Generic;
 
 namespace ReportGenerator
 {
