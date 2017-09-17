@@ -18,26 +18,34 @@ namespace ReportGenerator
             [Option('i', "InputFile", Required = true, HelpText = "InputPath to the report configuration file (JSON)")]
             public string InputFilePath { get; set; }
 
-            [Option('o', "OutputFilePathj", Required = true, HelpText = " OutputPath to the report configuration file (JSON)")]
+            [Option('o', "OutputFilePath", Required = true, HelpText = " OutputPath to the report configuration file (JSON)")]
             public string OutputFilePath { get; set; }
+
+            [Option('c', "config", Required =false, HelpText = "Path to the report configuration file (JSON)")]
+            public string ConfigPath { get; set; }
         }
 
         private static void Main(string[] args)
         {
 
             var result = Parser.Default.ParseArguments<Options>(args);
-           
             var options = result.Value;
 
             if (result.Errors.Any())
             {
                 foreach (var error in result.Errors)
-                    Console.Error.WriteLine(error);
+                Console.Error.WriteLine(error);
                 Environment.Exit(1);
             }
             if (!File.Exists(options.InputFilePath))
             {
-                Console.Error.WriteLine("Report settings file not found");
+                 Console.Error.WriteLine("Report settings file not found");
+                 Environment.Exit(1);
+            }
+
+            if(string.IsNullOrEmpty(options.ConfigPath))
+            {
+                Console.Error.WriteLine("JSon Object Setting not found");
                 Environment.Exit(1);
             }
 
@@ -45,13 +53,14 @@ namespace ReportGenerator
             using (var output = File.Open(options.OutputFilePath, FileMode.Create))
             using (var stamper = new PdfStamper(reader, output))
             {
-             dynamic reportAssests = JsonConvert.DeserializeObject(args[0]);
+             dynamic reportAssests = JsonConvert.DeserializeObject(result.Value.ConfigPath);
 
                 foreach (var item in reportAssests)
                 {
-                    string filePath = item.ImageFilePath;
+                    string filePath = item.FilePath;
                     int page = item.PageNumber;
-                    Rectangle location = item.rectangular;
+                    // Construct  the rectangular with respect to coordiantes (0,0)
+                    Rectangle location = new Rectangle((float)item.Coordinates.X,(float)item.Coordinates.Y);
 
                     string attachmentName = Path.GetFileName(filePath);
                     var fileSpec = PdfFileSpecification.FileEmbedded(stamper.Writer, filePath,
